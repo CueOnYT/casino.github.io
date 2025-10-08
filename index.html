@@ -1,96 +1,212 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cuemo’s Casino 🎰</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Cuemo’s Casino</h1>
-      <p class="subtitle">Play with fake coins in a cozy cherry blossom casino 🌸</p>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cuemo’s Casino — Cherry Blossom</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <h1>Cuemo’s Casino</h1>
+        <p class="tagline">Cozy cherry-blossom casino • Fake money only 🌸</p>
+      </div>
+
+      <div class="controls">
+        <div class="balance">
+          <div class="label">Balance</div>
+          <div id="balance" class="amount">$1,000</div>
+        </div>
+
+        <div class="theme-row">
+          <button id="themeToggle" class="btn ghost">Night Mode</button>
+        </div>
+
+        <div class="quick-actions">
+          <button id="addMoney" class="btn">Add $500</button>
+          <button id="resetMoney" class="btn ghost">Reset</button>
+        </div>
+      </div>
     </header>
 
-    <nav class="tabs">
-      <button class="tab active" data-tab="slots">🎰 Slots</button>
-      <button class="tab" data-tab="blackjack">🃏 Blackjack</button>
-      <button class="tab" data-tab="roulette">🎡 Roulette</button>
-      <button class="tab" data-tab="coinflip">🪙 Coin Flip</button>
-      <button class="tab" data-tab="poker">♠️ Poker</button>
+    <nav class="tabs" role="tablist">
+      <!-- Tab buttons: text is black when light theme is active -->
+      <button class="tab active" data-tab="slots" role="tab">🎰 Slots</button>
+      <button class="tab" data-tab="blackjack" role="tab">🃏 Blackjack</button>
+      <button class="tab" data-tab="roulette" role="tab">🎡 Roulette</button>
+      <button class="tab" data-tab="coinflip" role="tab">🪙 Coin Flip</button>
+      <button class="tab" data-tab="poker" role="tab">♠ Poker</button>
+      <button class="tab" data-tab="minesweeper" role="tab">💣 Minesweeper</button>
+      <button class="tab" data-tab="keno" role="tab">🔢 Keno</button>
+      <button class="tab" data-tab="craps" role="tab">🎲 Craps</button>
+      <button class="tab" data-tab="baccarat" role="tab">🀄 Baccarat</button>
+      <button class="tab" data-tab="dice" role="tab">🎲 Dice Duel</button>
+      <button class="tab" data-tab="war" role="tab">⚔️ War</button>
     </nav>
 
-    <main>
-      <section id="balance-section">
-        <h2>Balance: <span id="balance">$1,000</span></h2>
-        <button id="addMoney">Add $500</button>
-        <button id="resetMoney">Reset</button>
-      </section>
+    <main class="main">
+      <!-- Each section is a game panel. Only one visible at a time. -->
+      <section class="panel visible" id="slots" data-game="slots" aria-labelledby="tab-slots">
+        <h2>🎰 Neon Cherry Slots</h2>
+        <p class="muted">Match symbols. Pair = small win, 3 of a kind = big win, 7s = jackpot.</p>
 
-      <!-- SLOTS -->
-      <section class="game visible" id="slots">
-        <h2>🎰 Slots</h2>
-        <p>Spin the reels and try to match 3 symbols for a win!</p>
-        <div class="slot-reels">
-          <div class="reel" id="r1">🍒</div>
-          <div class="reel" id="r2">🍋</div>
-          <div class="reel" id="r3">🍇</div>
+        <div class="slot-area">
+          <div class="reel" id="slot-r1">🍒</div>
+          <div class="reel" id="slot-r2">🍋</div>
+          <div class="reel" id="slot-r3">🍊</div>
         </div>
-        <input type="number" id="slotBet" placeholder="Bet amount" value="50" />
-        <button id="spinBtn">Spin!</button>
+
+        <div class="row">
+          <input id="slotBet" type="number" min="1" value="50" aria-label="Slot bet" />
+          <button id="spinBtn" class="btn">Spin</button>
+        </div>
       </section>
 
-      <!-- BLACKJACK -->
-      <section class="game" id="blackjack">
+      <section class="panel" id="blackjack" data-game="blackjack">
         <h2>🃏 Blackjack</h2>
-        <p>Try to beat the dealer without going over 21.</p>
-        <div class="bj-display">
-          <p>Your hand: <span id="bjPlayer">–</span></p>
-          <p>Dealer: <span id="bjDealer">–</span></p>
+        <p class="muted">Beat the dealer (closest to 21 without busting). Simplified single-player table.</p>
+
+        <div class="bj-grid">
+          <div><strong>Your hand</strong><div id="bjPlayer" class="hand display">—</div></div>
+          <div><strong>Dealer</strong><div id="bjDealer" class="hand display">—</div></div>
         </div>
-        <input type="number" id="bjBet" placeholder="Bet amount" value="50" />
-        <button id="dealBtn">Deal Cards</button>
+
+        <div class="row">
+          <input id="bjBet" type="number" min="1" value="50" />
+          <button id="bjDeal" class="btn">Deal</button>
+          <button id="bjHit" class="btn ghost" disabled>Hit</button>
+          <button id="bjStand" class="btn ghost" disabled>Stand</button>
+        </div>
       </section>
 
-      <!-- ROULETTE -->
-      <section class="game" id="roulette">
-        <h2>🎡 Roulette</h2>
-        <p>Pick a color or number and see if you win!</p>
-        <select id="ruType">
-          <option value="red">Red</option>
-          <option value="black">Black</option>
-          <option value="number">Number (0–36)</option>
-        </select>
-        <input type="number" id="ruBet" placeholder="Bet amount" value="50" />
-        <button id="spinWheel">Spin Wheel</button>
+      <section class="panel" id="roulette" data-game="roulette">
+        <h2>🎡 Roulette (single-zero)</h2>
+        <p class="muted">Bet color (2×), parity (2×), or exact number (35×)</p>
+
+        <div class="row">
+          <select id="ruType">
+            <option value="color">Color (red/black)</option>
+            <option value="parity">Even / Odd</option>
+            <option value="number">Number 0–36</option>
+          </select>
+          <input id="ruChoice" placeholder="red / 17 / even" />
+          <input id="ruBet" type="number" min="1" value="50" />
+          <button id="ruSpin" class="btn">Spin</button>
+        </div>
+        <div id="ruResult" class="muted">—</div>
       </section>
 
-      <!-- COIN FLIP -->
-      <section class="game" id="coinflip">
+      <section class="panel" id="coinflip" data-game="coinflip">
         <h2>🪙 Coin Flip</h2>
-        <p>Heads or Tails — 50/50 chance to double your bet!</p>
-        <div class="coin" id="coin">H</div>
-        <input type="number" id="coinBet" placeholder="Bet amount" value="50" />
-        <button data-choice="H" class="flipBtn">Heads</button>
-        <button data-choice="T" class="flipBtn">Tails</button>
+        <p class="muted">Pick Heads or Tails. Correct guess pays 2×</p>
+
+        <div class="coin-preview" id="coinFace">H</div>
+        <div class="row">
+          <input id="coinBet" type="number" min="1" value="20" />
+          <button data-choice="H" class="btn flipBtn">Heads</button>
+          <button data-choice="T" class="btn flipBtn">Tails</button>
+        </div>
       </section>
 
-      <!-- POKER -->
-      <section class="game" id="poker">
-        <h2>♠️ Poker (Simple)</h2>
-        <p>Draw a hand and see if you get a winning combo!</p>
-        <div class="hand" id="pokerHand">🂠 🂠 🂠 🂠 🂠</div>
-        <input type="number" id="pokerBet" placeholder="Bet amount" value="50" />
-        <button id="dealPoker">Deal Hand</button>
+      <section class="panel" id="poker" data-game="poker">
+        <h2>♠ Draw Poker (5-card draw)</h2>
+        <p class="muted">Deal 5 cards, hold any, draw once. Pays by hand rank.</p>
+
+        <div id="vpCards" class="vp-cards">—</div>
+
+        <div class="row">
+          <input id="vpBet" type="number" min="1" value="20" />
+          <button id="vpDeal" class="btn">Deal</button>
+          <button id="vpDraw" class="btn ghost" disabled>Draw</button>
+        </div>
       </section>
+
+      <section class="panel" id="minesweeper" data-game="minesweeper">
+        <h2>💣 Minesweeper — Cherry Blossom Edition</h2>
+        <p class="muted">Click tiles to clear the board. Right-click (or long press) to flag.</p>
+
+        <div class="row">
+          <label>Difficulty:
+            <select id="ms-diff">
+              <option value="easy">Easy (6x6 / 6 mines)</option>
+              <option value="med" selected>Medium (8x8 / 12 mines)</option>
+              <option value="hard">Hard (10x10 / 20 mines)</option>
+            </select>
+          </label>
+          <button id="ms-new" class="btn">New Game</button>
+        </div>
+
+        <div id="ms-board" class="ms-board" aria-live="polite"></div>
+        <div id="ms-status" class="muted">—</div>
+      </section>
+
+      <section class="panel" id="keno" data-game="keno">
+        <h2>🔢 Keno</h2>
+        <p class="muted">Pick up to 10 numbers (1–40). Simplified payouts.</p>
+        <div id="kenoPick" class="keno-grid"></div>
+
+        <div class="row">
+          <input id="kenoBet" type="number" min="1" value="5" />
+          <button id="kenoPlay" class="btn">Play</button>
+        </div>
+        <div id="kenoResult" class="muted">—</div>
+      </section>
+
+      <section class="panel" id="craps" data-game="craps">
+        <h2>🎲 Craps (Pass Line simplified)</h2>
+        <p class="muted">Come-out roll 7/11 wins, 2/3/12 lose. After point, make point to win.</p>
+        <div class="row">
+          <input id="crapsBet" type="number" min="1" value="10" />
+          <button id="crapsRoll" class="btn">Roll</button>
+          <div id="crapsDice" class="muted">—</div>
+        </div>
+        <div id="crapsState" class="muted">Point: —</div>
+      </section>
+
+      <section class="panel" id="baccarat" data-game="baccarat">
+        <h2>🀄 Baccarat (Simplified)</h2>
+        <p class="muted">Bet on Player/Banker/Tie. Simplified 2-card totals mod 10.</p>
+        <div class="row">
+          <select id="bacChoice">
+            <option value="player">Player</option>
+            <option value="banker">Banker</option>
+            <option value="tie">Tie</option>
+          </select>
+          <input id="bacBet" type="number" min="1" value="20" />
+          <button id="bacBtn" class="btn">Deal</button>
+        </div>
+        <div id="bacResult" class="muted">—</div>
+      </section>
+
+      <section class="panel" id="dice" data-game="dice">
+        <h2>🎲 Dice Duel</h2>
+        <p class="muted">You and CPU roll a die. Higher roll wins 2×.</p>
+        <div class="row">
+          <input id="diceBet" type="number" min="1" value="10" />
+          <button id="diceRoll" class="btn">Roll</button>
+        </div>
+        <div id="diceResult" class="muted">—</div>
+      </section>
+
+      <section class="panel" id="war" data-game="war">
+        <h2>⚔️ War (Card)</h2>
+        <p class="muted">Each draws a card; higher wins. Ties draw again.</p>
+        <div class="row">
+          <input id="warBet" type="number" min="1" value="10" />
+          <button id="warPlay" class="btn">Play</button>
+        </div>
+        <div id="warResult" class="muted">—</div>
+      </section>
+
     </main>
 
-    <footer>
-      <p>🌸 Made with care by Cuemo — No real gambling, just good vibes.</p>
-    </footer>
+    <footer class="footer muted">Made with care by Cuemo — fake money only • Save theme & balance locally</footer>
+  </div>
 
-    <div id="toast"></div>
+  <div id="toast" class="toast" aria-live="polite"></div>
 
-    <script src="scripts.js"></script>
-  </body>
+  <script src="scripts.js"></script>
+</body>
 </html>
