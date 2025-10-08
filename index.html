@@ -1,198 +1,96 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cuemo’s Casino — Fake Money Demo</title>
-  <meta name="description" content="Cuemo’s Casino — fake money casino demo for learning and fun. Slots, Blackjack, Roulette, Video Poker, Baccarat, Craps, Keno, Coin Flip." />
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="site-wrap">
-    <aside class="sidebar panel">
-      <header>
-        <h1>Cuemo’s Casino</h1>
-        <p class="muted">Fake currency only — demo for GitHub Pages.</p>
-      </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cuemo’s Casino 🎰</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Cuemo’s Casino</h1>
+      <p class="subtitle">Play with fake coins in a cozy cherry blossom casino 🌸</p>
+    </header>
 
-      <section class="account">
-        <div class="balance-row">
-          <div>
-            <div class="label">Balance</div>
-            <div id="balance" class="amount">$1,000</div>
-          </div>
-          <div class="acct-actions">
-            <button id="addCash" class="btn">+ $500</button>
-            <button id="resetBtn" class="btn ghost">Reset</button>
-          </div>
-        </div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="slots">🎰 Slots</button>
+      <button class="tab" data-tab="blackjack">🃏 Blackjack</button>
+      <button class="tab" data-tab="roulette">🎡 Roulette</button>
+      <button class="tab" data-tab="coinflip">🪙 Coin Flip</button>
+      <button class="tab" data-tab="poker">♠️ Poker</button>
+    </nav>
 
-        <div class="quick-bets">
-          <div class="label">Quick bet</div>
-          <div class="controls">
-            <button class="chip" data-bet="10">$10</button>
-            <button class="chip" data-bet="50">$50</button>
-            <button class="chip" data-bet="100">$100</button>
-            <input id="customBet" placeholder="custom" type="number" min="1"/>
-          </div>
-        </div>
-
-        <p class="foot muted">Demo only • Not for real gambling • Save/load uses localStorage</p>
+    <main>
+      <section id="balance-section">
+        <h2>Balance: <span id="balance">$1,000</span></h2>
+        <button id="addMoney">Add $500</button>
+        <button id="resetMoney">Reset</button>
       </section>
-    </aside>
 
-    <main class="main panel">
-      <div class="topbar">
-        <h2>Games</h2>
-        <p class="muted">Many classic casino games implemented for fun.</p>
-      </div>
+      <!-- SLOTS -->
+      <section class="game visible" id="slots">
+        <h2>🎰 Slots</h2>
+        <p>Spin the reels and try to match 3 symbols for a win!</p>
+        <div class="slot-reels">
+          <div class="reel" id="r1">🍒</div>
+          <div class="reel" id="r2">🍋</div>
+          <div class="reel" id="r3">🍇</div>
+        </div>
+        <input type="number" id="slotBet" placeholder="Bet amount" value="50" />
+        <button id="spinBtn">Spin!</button>
+      </section>
 
-      <section class="games-grid">
+      <!-- BLACKJACK -->
+      <section class="game" id="blackjack">
+        <h2>🃏 Blackjack</h2>
+        <p>Try to beat the dealer without going over 21.</p>
+        <div class="bj-display">
+          <p>Your hand: <span id="bjPlayer">–</span></p>
+          <p>Dealer: <span id="bjDealer">–</span></p>
+        </div>
+        <input type="number" id="bjBet" placeholder="Bet amount" value="50" />
+        <button id="dealBtn">Deal Cards</button>
+      </section>
 
-        <!-- Slots -->
-        <article class="game-card" id="game-slots">
-          <header><h3>Neon Slots</h3></header>
-          <p class="muted">3-reel slot. Payouts: pair 3×, 3-of-kind 10×, jackpot 25×</p>
-          <div class="game-body">
-            <div class="reels">
-              <div class="reel" id="slot-r1">🍒</div>
-              <div class="reel" id="slot-r2">🍋</div>
-              <div class="reel" id="slot-r3">🍊</div>
-            </div>
-            <div class="game-controls">
-              <input id="slotBet" type="number" value="10" min="1"/>
-              <button id="spinBtn" class="btn">Spin</button>
-            </div>
-          </div>
-        </article>
+      <!-- ROULETTE -->
+      <section class="game" id="roulette">
+        <h2>🎡 Roulette</h2>
+        <p>Pick a color or number and see if you win!</p>
+        <select id="ruType">
+          <option value="red">Red</option>
+          <option value="black">Black</option>
+          <option value="number">Number (0–36)</option>
+        </select>
+        <input type="number" id="ruBet" placeholder="Bet amount" value="50" />
+        <button id="spinWheel">Spin Wheel</button>
+      </section>
 
-        <!-- Coin Flip -->
-        <article class="game-card" id="game-coin">
-          <header><h3>Coin Flip</h3></header>
-          <p class="muted">Pick heads or tails. Correct guess pays 2×</p>
-          <div class="game-body coin-body">
-            <div id="coinFace" class="coin">H</div>
-            <div class="coin-actions">
-              <div class="controls">
-                <button class="btn ghost small" data-choice="H">Heads</button>
-                <button class="btn ghost small" data-choice="T">Tails</button>
-              </div>
-              <div class="bet-row">
-                <input id="coinBet" type="number" value="20" min="1"/>
-                <button id="flipBtn" class="btn">Flip</button>
-              </div>
-            </div>
-          </div>
-        </article>
+      <!-- COIN FLIP -->
+      <section class="game" id="coinflip">
+        <h2>🪙 Coin Flip</h2>
+        <p>Heads or Tails — 50/50 chance to double your bet!</p>
+        <div class="coin" id="coin">H</div>
+        <input type="number" id="coinBet" placeholder="Bet amount" value="50" />
+        <button data-choice="H" class="flipBtn">Heads</button>
+        <button data-choice="T" class="flipBtn">Tails</button>
+      </section>
 
-        <!-- Blackjack -->
-        <article class="game-card" id="game-blackjack">
-          <header><h3>Blackjack (vs Dealer)</h3></header>
-          <p class="muted">Closest to 21 wins. Simplified single-player version.</p>
-          <div class="game-body">
-            <div class="bj-hands">
-              <div><strong>Your hand</strong><div id="bjPlayer" class="hand display">—</div></div>
-              <div><strong>Dealer</strong><div id="bjDealer" class="hand display">—</div></div>
-            </div>
-            <div class="game-controls bj-controls">
-              <input id="bjBet" type="number" value="20" min="1"/>
-              <div class="btn-row">
-                <button id="bjDeal" class="btn">Deal</button>
-                <button id="bjHit" class="btn ghost" disabled>Hit</button>
-                <button id="bjStand" class="btn ghost" disabled>Stand</button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Roulette -->
-        <article class="game-card" id="game-roulette">
-          <header><h3>Roulette (single-zero)</h3></header>
-          <p class="muted">Bet color (2×), parity (2×) or number (35×)</p>
-          <div class="game-body">
-            <div class="roulette-controls">
-              <select id="ruType">
-                <option value="color">Color (Red / Black)</option>
-                <option value="parity">Even / Odd</option>
-                <option value="number">Number (0–36)</option>
-              </select>
-              <input id="ruChoice" placeholder="e.g. red or 17"/>
-              <input id="ruBet" type="number" value="10" min="1"/>
-              <button id="ruSpin" class="btn">Spin</button>
-            </div>
-            <div class="roulette-output muted" id="ruResult">—</div>
-          </div>
-        </article>
-
-        <!-- Video Poker -->
-        <article class="game-card" id="game-videopoker">
-          <header><h3>Video Poker (Draw 5)</h3></header>
-          <p class="muted">Deal 5, choose which to hold, draw once. Pays by hand rank.</p>
-          <div class="game-body vp-body">
-            <div id="vpCards" class="vp-cards">—</div>
-            <div class="vp-controls">
-              <input id="vpBet" type="number" value="10" min="1"/>
-              <button id="vpDeal" class="btn">Deal</button>
-              <button id="vpDraw" class="btn ghost" disabled>Draw</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Baccarat -->
-        <article class="game-card" id="game-baccarat">
-          <header><h3>Baccarat (Player / Banker)</h3></header>
-          <p class="muted">Compare totals (mod 10). Payouts: Player 1×, Banker 0.95×, Tie 8× (simplified)</p>
-          <div class="game-body">
-            <div class="baccarat-hands">
-              <div><strong>Player</strong><div id="bacPlayer" class="hand display">—</div></div>
-              <div><strong>Banker</strong><div id="bacBanker" class="hand display">—</div></div>
-            </div>
-            <div class="game-controls">
-              <select id="bacChoice">
-                <option value="player">Bet Player</option>
-                <option value="banker">Bet Banker</option>
-                <option value="tie">Bet Tie</option>
-              </select>
-              <input id="bacBet" type="number" value="20" min="1"/>
-              <button id="bacBtn" class="btn">Deal</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Craps -->
-        <article class="game-card" id="game-craps">
-          <header><h3>Craps (Pass Line)</h3></header>
-          <p class="muted">Simplified pass-line: 7/11 win on come-out, 2/3/12 lose. After point established, roll for point.</p>
-          <div class="game-body">
-            <div class="craps-info muted" id="crapsState">Point: —</div>
-            <div class="game-controls">
-              <input id="crapsBet" type="number" value="10" min="1"/>
-              <button id="crapsRoll" class="btn">Roll</button>
-              <div id="crapsDice" class="hand display">—</div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Keno -->
-        <article class="game-card" id="game-keno">
-          <header><h3>Keno</h3></header>
-          <p class="muted">Pick up to 10 numbers (1–40). Payouts depend on matches (simplified).</p>
-          <div class="game-body">
-            <div id="kenoPick" class="keno-grid"></div>
-            <div class="game-controls">
-              <input id="kenoBet" type="number" value="5" min="1"/>
-              <button id="kenoPlay" class="btn">Play</button>
-            </div>
-            <div id="kenoResult" class="muted">—</div>
-          </div>
-        </article>
-
+      <!-- POKER -->
+      <section class="game" id="poker">
+        <h2>♠️ Poker (Simple)</h2>
+        <p>Draw a hand and see if you get a winning combo!</p>
+        <div class="hand" id="pokerHand">🂠 🂠 🂠 🂠 🂠</div>
+        <input type="number" id="pokerBet" placeholder="Bet amount" value="50" />
+        <button id="dealPoker">Deal Hand</button>
       </section>
     </main>
-  </div>
 
-  <div id="toast" class="toast" aria-live="polite">...</div>
+    <footer>
+      <p>🌸 Made with care by Cuemo — No real gambling, just good vibes.</p>
+    </footer>
 
-  <script src="scripts.js"></script>
-</body>
+    <div id="toast"></div>
+
+    <script src="scripts.js"></script>
+  </body>
 </html>
